@@ -45,6 +45,10 @@
                 <img src="images\360_F_825525872_EhpRImtjshJG3YZLsUBYL7okymarEimp.jpg" alt="Beach Cleanup" style="max-width: 100%; height: auto; border-radius: 0 194px 194px 0;">
             </div>
         </div>
+
+        <div class="text-center py-4">
+            <h2>Total Donations: Rp {{ number_format($totalDonations, 0, '.', '.') }}</h2>
+        </div>
     </div>
 
     <script>
