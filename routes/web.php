@@ -13,3 +13,7 @@ Route::get('/home', [DonateController::class, 'home'])->name('home');
 Route::get('/login', [DonateController::class, 'login'])->name('login');
 Route::get('/register', [DonateController::class, 'register'])->name('register');
 Route::get('/project', [ProjectController::class, 'project'])->name('project');
+
+Route::get('/', function () {
+    return redirect()->route('home');
+});
