@@ -24,4 +24,34 @@ class DonateController extends Controller
         $amount = $request->input('amount');
         return view('donate.result', compact('amount'));
     }
+
+    public function aboutus()
+    {
+        return view('aboutus');
+    }
+
+    public function impact()
+    {
+        return view('impact');
+    }
+
+    public function home()
+    {
+        return view('home');
+    }
+    
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function project()
+    {
+        return view('project');
+    }
 }

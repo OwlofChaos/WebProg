@@ -55,24 +55,24 @@
             <div class="collapse navbar-collapse justify-content-end" style="margin-top: 25px;">
                 <ul class="navbar-nav me-5">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Home</a>
+                        <a class="nav-link text-white" href="home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">About</a>
+                        <a class="nav-link text-white" href="aboutus">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white active" href="donate">Donate</a>
+                        <a class="nav-link text-white" href="donate">Donate</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Impact</a>
+                        <a class="nav-link text-white" href="impact">Impact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Projects</a>
+                        <a class="nav-link text-white" href="project">Projects</a>
                     </li>
                 </ul>
                 <div class="d-flex" style="margin-right: 200px;">
-                    <a href="#" class="btn btn-light fw-bold text-dark me-4" style="width: 150px;">Register</a>
-                    <a href="#" class="btn btn-light fw-bold text-dark" style="width: 150px;">Login</a>
+                    <a href="register" class="btn btn-light fw-bold text-dark me-4" style="width: 150px;">Register</a>
+                    <a href="login" class="btn btn-light fw-bold text-dark" style="width: 150px;">Login</a>
                 </div>
             </div>
         </nav>
