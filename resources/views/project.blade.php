@@ -23,7 +23,7 @@
         </div>
         <div class="col-10">
             <div class="d-flex justify-content-center" id="projectContainer">
-
+                <!-- JavaScript will render the projects here -->
             </div>
         </div>
         <div class="col-1 text-center">
@@ -34,40 +34,59 @@
 
 <div class="container my-5">
     <div class="row">
-        <div class="col-md-6 mb-3">
-            <div class="card shadow">
-                <div class="card-body d-flex align-items-center" style="color: black">
-                    <div class="me-3">
-                        <img src="/images/image_6.jpg" alt="Donor" class="rounded-circle" style="width: 50px; height: 50px;">
-                    </div>
-                    <div>
-                        <h5 class="mb-0">Budi Santoso</h5>
-                        <p class="text-muted">Description Message</p>
-                    </div>
-                    <div class="ms-auto">
-                        <span class="badge bg-success p-3">Rp. 20.000.000</span>
+        <!-- Top Donors Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-black text-center">Top Donors</h3>
+            <div class="row">
+                @foreach ($donors as $donor)
+                <div class="col-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body d-flex align-items-center" style="color: black">
+                            <div class="me-3">
+                                <img src="{{ $donor->profile_picture }}" alt="Donor" class="rounded-circle" style="width: 50px; height: 50px;">
+                            </div>
+                            <div>
+                                <h5 class="mb-0">{{ $donor->name }}</h5>
+                                <p class="text-muted">{{ $donor->description }}</p>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="badge bg-success p-3">Rp. {{ number_format($donor->total_donation) }}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <div class="card shadow">
-                <div class="card-body d-flex align-items-center" style="color: black">
-                    <div class="me-3">
-                        <img src="/images/image_7.jpg" alt="Volunteer" class="rounded-circle" style="width: 50px; height: 50px;">
-                    </div>
-                    <div>
-                        <h5 class="mb-0">Rizky Fadillah</h5>
-                        <p class="text-muted">Description Message</p>
-                    </div>
-                    <div class="ms-auto">
-                        <span class="badge bg-primary p-3">15 Activity</span>
+
+        <!-- Top Volunteers Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-black text-center">Top Volunteers</h3>
+            <div class="row">
+                @foreach ($volunteers as $volunteer)
+                <div class="col-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body d-flex align-items-center" style="color: black">
+                            <div class="me-3">
+                                <img src="{{ $volunteer->profile_picture }}" alt="Volunteer" class="rounded-circle" style="width: 50px; height: 50px;">
+                            </div>
+                            <div>
+                                <h5 class="mb-0">{{ $volunteer->name }}</h5>
+                                <p class="text-muted">{{ $volunteer->description }}</p>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="badge bg-primary p-3">{{ $volunteer->activity_count }} Activities</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     const projects = [
