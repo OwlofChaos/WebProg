@@ -33,25 +33,27 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request)
-    {
-        Log::info('Register route hit.');
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        Log::info('Validation passed.');
+        public function register(Request $request)
+        {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+        
+            DB::transaction(function () use ($validated) {
+                User::create([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'],
+                    'password' => Hash::make($validated['password']),
+                ]);
+            });
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        Log::info('User created successfully.');
+            dispatch(new SendWelcomeEmail($user));
 
-        return redirect()->route('login.form')->with('success', 'Account created successfully.');
-    }
+            return redirect()->route('login.form')->with('success', 'Account created successfully.');
+        }
+        
 
 
     public function logout()
