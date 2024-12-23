@@ -95,7 +95,7 @@
 
 <div class="container">
     <div class="image-container">
-        <img src="/images/images.jpeg" alt="Sea Turtle" style="border-radius: 15px 0 0 15px;">
+        <img src="{{ asset('images/images.jpeg') }}" alt="Sea Turtle" style="border-radius: 15px 0 0 15px;">
     </div>
     <div class="form-container">
         <h2>REGISTRATION</h2>
