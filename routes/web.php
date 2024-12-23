@@ -4,17 +4,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\ProjectController;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
-Route::post('/donate', [DonateController::class, 'submit'])->name('donate.submit');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/aboutus', [DonateController::class, 'aboutus'])->name('aboutus');
-Route::get('/impact', [DonateController::class, 'impact'])->name('impact');
-Route::get('/home', [DonateController::class, 'home'])->name('home');
-Route::get('/login', [DonateController::class, 'login'])->name('login');
-Route::get('/register', [DonateController::class, 'register'])->name('register');
-Route::get('/project', [ProjectController::class, 'project'])->name('project');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [DonateController::class, 'home'])->name('home');
+    Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
+    Route::get('/project', [ProjectController::class, 'project'])->name('project');
+});
 
 Route::get('/', function () {
-    return redirect()->route('home');
+    return Auth::check() ? redirect()->route('home') : redirect()->route('login.form');
 });
