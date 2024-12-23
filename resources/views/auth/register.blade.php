@@ -101,15 +101,26 @@
         <h2>REGISTRATION</h2>
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required value="{{ old('name') }}">
+            @error('name')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+            @error('email')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            @error('password')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number">
             <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
         <div class="mt-3 text-center">
-            <a href="login">Already Have an Account?</a>
+            <a href="{{ route('login.form') }}">Already Have an Account?</a>
         </div>
     </div>
 </div>

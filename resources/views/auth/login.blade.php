@@ -100,14 +100,25 @@
     </div>
     <div class="form-container">
         <h2>REGISTRATION</h2>
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required style="margin-bottom: 230px;">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+            @error('email')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            @error('password')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
+        @if (session('success'))
+            <div class="alert alert-success mt-3">{{ session('success') }}</div>
+        @endif
         <div class="mt-3 text-center">
-            <a href="register">Don't Have an Account?</a>
+            <a href="{{ route('register.form') }}">Don't Have an Account?</a>
         </div>
     </div>
 </div>
