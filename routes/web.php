@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CleanupProjectController;
 use Illuminate\Support\Facades\Auth;
 
 // Authentication Routes
@@ -20,7 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
     Route::post('/donate', [DonateController::class, 'submit'])->name('donate.submit');
     Route::get('/aboutus', [DonateController::class, 'aboutus'])->name('aboutus');
-    Route::get('/impact', [DonateController::class, 'impact'])->name('impact');
+    Route::get('/impact', [CleanupProjectController::class, 'index'])->name('impact');
+    Route::post('/cleanup-projects', [CleanupProjectController::class, 'store'])->name('cleanup_projects.store');
     Route::get('/project', [ProjectController::class, 'project'])->name('project');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');

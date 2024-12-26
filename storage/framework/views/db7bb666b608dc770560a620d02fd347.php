@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Impact'); ?>
 
-@section('title', 'Impact')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="impact-page" style="background-color: #34BCF2; padding: 3em; color: white; text-align: center; font-family: Arial, sans-serif;">
     
@@ -24,19 +22,19 @@
     <div class="cleanup-projects" style="margin-top: 3em;">
         <h3>Cleanup Projects</h3>
         <div style="display: flex; justify-content: center; gap: 2em; flex-wrap: wrap; margin-top: 1em;">
-            @foreach($projects as $project)
+            <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div style="background-color: white; color: black; padding: 1em; border-radius: 10px; width: 45%;">
-                <img src="{{ asset('storage/' . $project->image_path) }}" alt="{{ $project->name_event }}" style="width: 100%; height: auto; border-radius: 10px; object-fit: cover;">
-                <p style="margin-top: 20px"><strong>Name Event:</strong> {{ $project->name_event }}</p>
-                <p><strong>Location:</strong> {{ $project->location }}</p>
-                <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($project->date)->format('d M Y') }}</p>
+                <img src="<?php echo e(asset('storage/' . $project->image_path)); ?>" alt="<?php echo e($project->name_event); ?>" style="width: 100%; height: auto; border-radius: 10px; object-fit: cover;">
+                <p style="margin-top: 20px"><strong>Name Event:</strong> <?php echo e($project->name_event); ?></p>
+                <p><strong>Location:</strong> <?php echo e($project->location); ?></p>
+                <p><strong>Date:</strong> <?php echo e(\Carbon\Carbon::parse($project->date)->format('d M Y')); ?></p>
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
     
-    <form action="{{ route('cleanup_projects.store') }}" method="POST" enctype="multipart/form-data" style="margin-top: 3em; background-color: white; padding: 2em; border-radius: 10px;">
-        @csrf
+    <form action="<?php echo e(route('cleanup_projects.store')); ?>" method="POST" enctype="multipart/form-data" style="margin-top: 3em; background-color: white; padding: 2em; border-radius: 10px;">
+        <?php echo csrf_field(); ?>
         <h3>Add New Project</h3>
         <div>
             <label for="name_event">Event Name:</label>
@@ -77,4 +75,5 @@
 </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Inazu\Downloads\New folder\WebProg\resources\views/impact.blade.php ENDPATH**/ ?>

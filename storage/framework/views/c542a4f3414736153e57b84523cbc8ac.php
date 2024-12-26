@@ -1,0 +1,169 @@
+<?php $__env->startSection('title', 'Projects'); ?>
+
+<?php $__env->startSection('content'); ?>
+<div class="container-fluid text-white text-center py-5" style="background-color: #34BCF2">
+    <h1 class="fw-bold">KG OF TRASH REMOVED</h1>
+    <div class="progress mx-auto my-4 position-relative" style="height: 30px; width: 80%; max-width: 800px;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+            10.23 Kg
+        </div>
+        <span class="position-absolute end-0 text-dark me-2" style="top: 50%; transform: translateY(-50%);">
+            100,000 Kg
+        </span>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 class="fw-bold mb-4">Upcoming Projects</h2>
+    <div class="row align-items-center">
+        <div class="col-1 text-center">
+            <button class="btn btn-secondary" id="prevButton">&lt;</button>
+        </div>
+        <div class="col-10">
+            <div class="d-flex justify-content-center" id="projectContainer">
+                <!-- JavaScript will render the projects here -->
+            </div>
+        </div>
+        <div class="col-1 text-center">
+            <button class="btn btn-secondary" id="nextButton">&gt;</button>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Top Donors Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-black text-center">Top Donors</h3>
+            <div class="row">
+                <?php $__currentLoopData = $donors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $donor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="col-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body d-flex align-items-center" style="color: black">
+                            <div class="me-3">
+                                <img src="<?php echo e($donor->profile_picture); ?>" alt="Donor" class="rounded-circle" style="width: 50px; height: 50px;">
+                            </div>
+                            <div>
+                                <h5 class="mb-0"><?php echo e($donor->name); ?></h5>
+                                <p class="text-muted"><?php echo e($donor->description); ?></p>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="badge bg-success p-3">Rp. <?php echo e(number_format($donor->total_donation)); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        </div>
+
+        <!-- Top Volunteers Section -->
+        <div class="col-md-6">
+            <h3 class="mb-4 text-black text-center">Top Volunteers</h3>
+            <div class="row">
+                <?php $__currentLoopData = $volunteers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $volunteer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="col-12 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body d-flex align-items-center" style="color: black">
+                            <div class="me-3">
+                                <img src="<?php echo e($volunteer->profile_picture); ?>" alt="Volunteer" class="rounded-circle" style="width: 50px; height: 50px;">
+                            </div>
+                            <div>
+                                <h5 class="mb-0"><?php echo e($volunteer->name); ?></h5>
+                                <p class="text-muted"><?php echo e($volunteer->description); ?></p>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="badge bg-primary p-3"><?php echo e($volunteer->activity_count); ?> Activities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const projects = [
+        { image: '/images/image_6.jpg', text: 'Text 1' },
+        { image: '/images/image_7.jpg', text: 'Text 2' },
+        { image: '/images/image_6.jpg', text: 'Text 3' },
+        { image: '/images/image_7.jpg', text: 'Text 4' },
+    ];
+
+    let highlightedIndex = 0;
+
+    const renderProjects = () => {
+        const projectContainer = document.getElementById('projectContainer');
+        projectContainer.innerHTML = '';
+
+        projects.forEach((project, index) => {
+            const card = document.createElement('div');
+            card.className = 'card mx-3 project-card';
+            card.style.width = '150px';
+            card.style.opacity = index === highlightedIndex ? '1' : '0.5';
+            if (index === highlightedIndex) {
+                card.classList.add('highlighted');
+            }
+
+            card.innerHTML = `
+                <img src="${project.image}" class="card-img-top" alt="${project.text}">
+                <div class="card-body text-center">
+                    <p class="card-text" style="color: black">${project.text}</p>
+                </div>
+            `;
+
+            projectContainer.appendChild(card);
+        });
+    };
+
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    prevButton.addEventListener('click', () => {
+        if (highlightedIndex > 0) {
+            highlightedIndex--;
+        } else {
+            highlightedIndex = projects.length - 1;
+        }
+        renderProjects();
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (highlightedIndex < projects.length - 1) {
+            highlightedIndex++;
+        } else {
+            highlightedIndex = 0;
+        }
+        renderProjects();
+    });
+
+    renderProjects();
+</script>
+
+<style>
+    #projectContainer {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .project-card {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-card.highlighted {
+        transform: scale(1.1);
+    }
+
+    .project-card:hover {
+        transform: scale(1.1);
+    }
+</style>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Inazu\Downloads\New folder\WebProg\resources\views/project.blade.php ENDPATH**/ ?>
