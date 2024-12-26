@@ -23,7 +23,8 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        // Use Auth attempt with remember token disabled for faster execution.
+        if (Auth::attempt($request->only('email', 'password'), false)) {
             return redirect()->route('home');
         }
 
@@ -35,28 +36,28 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-        public function register(Request $request)
-        {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|string|min:6|confirmed',
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        // Ensure the transaction is as fast as possible
+        DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
             ]);
-        
-            DB::transaction(function () use ($validated) {
-                User::create([
-                    'name' => $validated['name'],
-                    'email' => $validated['email'],
-                    'password' => Hash::make($validated['password']),
-                ]);
-            });
 
-            dispatch(new SendWelcomeEmail($user));
+            // Dispatch welcome email job
+            SendWelcomeEmail::dispatch($user);
+        });
 
-            return redirect()->route('login.form')->with('success', 'Account created successfully.');
-        }
-        
-
+        return redirect()->route('login.form')->with('success', 'Account created successfully.');
+    }
 
     public function logout()
     {
